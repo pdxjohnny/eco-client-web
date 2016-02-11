@@ -1,0 +1,21 @@
+{
+  "name": "numapp-client-web",
+  "version": "0.0.0",
+  "homepage": "https://github.com/pdxjohnny/numapp-client-web",
+  "authors": [
+    "John Andersen <johnandersenpdx@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "gravatarjs": "~1.0.0",
+    "jquery": "~2.1.4",
+    "semantic": "semantic-ui#~2.1.4"
+  }
+}

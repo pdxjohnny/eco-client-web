@@ -1,5 +1,6 @@
 var MakeAPI = function () {
-  this.server = location.origin;
+  // this.server = location.origin;
+  this.server = "https://couch.carpoolme.net/";
   this.tokenCookieName = 'token';
   this.token = '';
   this.onError = {};
@@ -114,8 +115,9 @@ MakeAPI.prototype.GetThing = function (id, callback, errorCallback) {
 };
 
 MakeAPI.prototype.SaveThing = function (id, data, callback, errorCallback) {
-  var url = this.URLMaping['thing'];
-  url = url.replace(/:id/g, id);
+  var url = "eco";
+  // var url = this.URLMaping['thing'];
+  // url = url.replace(/:id/g, id);
   this.GenericRequest(url, data, callback, errorCallback);
 };
 

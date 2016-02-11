@@ -57,7 +57,7 @@ function Item(key, value) {
 
 function AppendToForm(object) {
   $('#formItems')[0].appendChild(object);
-  UpdateListeners();
+  // UpdateListeners();
 }
 
 function UpdateListeners() {

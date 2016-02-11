@@ -11,7 +11,7 @@ $(document).ready(function () {
         'longitude': position.coords.longitude
       };
       var item = SetItem(data);
-      UpdateListeners();
+      // UpdateListeners();
       $('#formItems')[0].data_change = function (data) {
         $('#thing_search').val(data['name']);
         window.location.hash = '#id=' + data['name'];

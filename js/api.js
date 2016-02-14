@@ -10,6 +10,7 @@ var MakeAPI = function () {
     'login': '/api/user/login',
     'refresh': '/api/user/refresh',
     'register': '/api/user/register',
+    'near': '/api/near/:latitude/:longitude/:range',
   };
   // Web socket related
   this.connected = false;
@@ -81,6 +82,7 @@ MakeAPI.prototype.GenericRequest = function (url, object, callback, errorCallbac
   var request = {
     type: 'GET',
     url: this.server + url,
+    dataType: 'json',
     success: function (data) {
       if (typeof callback === 'function') {
         callback(data);
@@ -119,6 +121,23 @@ MakeAPI.prototype.SaveThing = function (id, data, callback, errorCallback) {
   // var url = this.URLMaping['thing'];
   // url = url.replace(/:id/g, id);
   this.GenericRequest(url, data, callback, errorCallback);
+};
+
+MakeAPI.prototype.GetNear = function (options, callback, errorCallback) {
+  // var url = this.URLMaping['near'];
+  // url = url.replace(/:latitude/g, options['latitude']);
+  // url = url.replace(/:longitude/g, options['longitude']);
+  // url = url.replace(/:range/g, options['range']);
+  // this.GenericRequest(url, options, callback, errorCallback);
+  var url = 'eco/_all_docs';
+  this.GenericRequest(url, null, callback, errorCallback);
+};
+
+MakeAPI.prototype.GetEach = function (things, callback, errorCallback) {
+  for (var i = 0; i < things['rows'].length; i++) {
+    var url = 'eco/' + things['rows'][i].key;
+    this.GenericRequest(url, null, callback, errorCallback);
+  }
 };
 
 MakeAPI.prototype.change_server = function (url) {

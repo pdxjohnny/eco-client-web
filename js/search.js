@@ -8,7 +8,9 @@ $(document).ready(function () {
       var data = {
         'name': $('#thing_search').val(),
         'latitude': position.coords.latitude,
-        'longitude': position.coords.longitude
+        'longitude': position.coords.longitude,
+        'description': '',
+        'image': '',
       };
       var item = SetItem(data);
       // UpdateListeners();

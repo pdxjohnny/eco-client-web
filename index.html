@@ -13,19 +13,42 @@
 </head>
 <body>
 
-<h1 class="ui center aligned header">
-  <a id="homeLink" href="#" class="ui image">
-    <h1>eco</h1>
-  </a>
-</h1>
+<div class="pusher">
+  <div class="ui inverted vertical masthead center aligned segment">
 
-<div class="ui container">
-  <div class="ui fluid right labeled input left icon">
-    <i class="search icon"></i>
-    <input id="thing_search" type="text" placeholder="Search for something...">
-    <div class="ui tag label">
-      <a id="addThing">Add Something</a>
+    <div class="ui container">
+      <div class="ui large secondary inverted pointing menu">
+        <a class="active item" href="index.html">
+          Home
+        </a>
+        <a class="item" href="map.html">
+          Map
+        </a>
+        <div class="right menu">
+          <div class="item">
+            <div class="ui icon input">
+              <input id="thing_search" type="text" placeholder="Search...">
+              <i class="search link icon"></i>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <br>
+    <br>
+
+    <div class="ui text container">
+      <h1 class="ui inverted header">
+        Ecosystem Mapper
+      </h1>
+      <h4>Maping ecosystems for visualization and analysis</h4>
+      <div class="ui huge primary button"  id="addThing">
+        Add Somthing  <i class="right arrow icon"></i>
+      </div>
+    </div>
+    <br>
+
   </div>
 </div>
 

@@ -59,7 +59,7 @@
       var options = {
         longitude: center.lng,
          latitude: center.lat,
-         radius: 10
+         radius: 10 * 5000
       };
       API.GetNear(options, function (data) {
         console.log('Got things', data);

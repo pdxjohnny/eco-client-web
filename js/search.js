@@ -2,13 +2,17 @@ $(document).ready(function () {
   displaySearch();
   var user = API.User();
   $('#addThing').click(function (event) {
-    window.location.hash = '#id=' + $('#thing_search').val();
+    var name = $('#thing_search').val();
+    if (typeof name === 'undefined') {
+      name = '';
+    }
+    window.location.hash = '#id=' + name;
     API.GetLocation(function (position) {
       console.log(position);
       var data = {
-        'name': $('#thing_search').val(),
-        'latitude': position.coords.latitude,
+        'name': name,
         'longitude': position.coords.longitude,
+        'latitude': position.coords.latitude,
         'description': '',
         'image': '',
       };

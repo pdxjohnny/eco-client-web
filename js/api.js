@@ -1,6 +1,6 @@
 var MakeAPI = function () {
-  // this.server = location.origin;
-  this.server = "https://couch.carpoolme.net/";
+  this.server = location.origin;
+  // this.server = "https://couch.carpoolme.net/";
   this.tokenCookieName = 'token';
   this.token = '';
   this.onError = {};
@@ -10,7 +10,7 @@ var MakeAPI = function () {
     'login': '/api/user/login',
     'refresh': '/api/user/refresh',
     'register': '/api/user/register',
-    'near': '/api/near/:latitude/:longitude/:range',
+    'near': '/api/near/thing',
   };
   // Web socket related
   this.connected = false;
@@ -117,27 +117,24 @@ MakeAPI.prototype.GetThing = function (id, callback, errorCallback) {
 };
 
 MakeAPI.prototype.SaveThing = function (id, data, callback, errorCallback) {
-  var url = "eco";
-  // var url = this.URLMaping['thing'];
-  // url = url.replace(/:id/g, id);
+  // var url = "eco";
+  var url = this.URLMaping['thing'];
+  url = url.replace(/:id/g, id);
   this.GenericRequest(url, data, callback, errorCallback);
 };
 
 MakeAPI.prototype.GetNear = function (options, callback, errorCallback) {
-  // var url = this.URLMaping['near'];
-  // url = url.replace(/:latitude/g, options['latitude']);
-  // url = url.replace(/:longitude/g, options['longitude']);
-  // url = url.replace(/:range/g, options['range']);
-  // this.GenericRequest(url, options, callback, errorCallback);
-  var url = 'eco/_all_docs';
-  this.GenericRequest(url, null, callback, errorCallback);
+  var url = this.URLMaping['near'];
+  this.GenericRequest(url, options, callback, errorCallback);
+  // var url = 'eco/_all_docs';
+  // this.GenericRequest(url, null, callback, errorCallback);
 };
 
 MakeAPI.prototype.GetEach = function (things, callback, errorCallback) {
-  for (var i = 0; i < things['rows'].length; i++) {
-    var url = 'eco/' + things['rows'][i].key;
-    this.GenericRequest(url, null, callback, errorCallback);
-  }
+  // for (var i = 0; i < things['rows'].length; i++) {
+  //   var url = 'eco/' + things['rows'][i].key;
+  //   this.GenericRequest(url, null, callback, errorCallback);
+  // }
 };
 
 MakeAPI.prototype.change_server = function (url) {

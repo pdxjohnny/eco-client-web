@@ -3,10 +3,13 @@ $(document).ready(function () {
     AddItem();
   });
   $('#submit').click(function (event) {
+    $('#thingFormSuccess').hide();
     $('#thingFormErrors').hide();
     var object = FormToObject();
-    API.SaveThing(object['_id'], object,
+    API.SaveThing(object['id'], object,
       function (data) {
+        $('#thingFormSuccess').text('Success!');
+        $('#thingFormSuccess').show();
         $('#thingFormErrors').hide();
         SetResult(object);
       },
@@ -18,6 +21,7 @@ $(document).ready(function () {
           $('#thingFormErrors').text('There was an error saving');
         }
         $('#thingFormErrors').show();
+        $('#thingFormSuccess').hide();
       }
     );
   });

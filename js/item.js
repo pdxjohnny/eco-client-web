@@ -32,12 +32,12 @@ function Item(key, value) {
   // This the key, it is an thing type
   item.formKey = document.createElement('input');
   item.formKey.type = 'text';
-  item.formKey.placeholder = 'Type (animal, building)';
+  item.formKey.placeholder = 'Category';
   item.appendChild(item.formKey);
   // This the value, it is an thing name
   item.formValue = document.createElement('input');
   item.formValue.type = 'text';
-  item.formValue.placeholder = 'Categoy (bird, skyscraper)';
+  item.formValue.placeholder = 'Info';
   item.appendChild(item.formValue);
   // This the delete button, for deleting a field
   item.formDelete = document.createElement('div');

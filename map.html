@@ -52,7 +52,7 @@
         <img src="assets/images/no-image.png">
       </div>
       <div class="description">
-        <div id="name" class="ui header"></div>
+        <!-- <div id="name" class="ui header"></div> -->
         <p id="description"></p>
       </div>
     </div>
@@ -98,6 +98,12 @@
           var thing = data['rows'][i];
             // console.log('Got thing', thing);
             (function (thing) {
+              if (typeof thing.name === 'undefined' || thing.name.length < 1) {
+                thing.name = "Name"
+              }
+              if (typeof thing.description === 'undefined' || thing.description.length < 1) {
+                thing.description = "Description"
+              }
               var position = {};
               position.lng = Number(thing.longitude);
               position.lat = Number(thing.latitude);
@@ -111,8 +117,8 @@
 
               var startEditing = function (event) {
                 console.log('Now editing', marker.draggable);
-                $('#name').attr('content-editable', true);
-                $('#description').attr('content-editable', true);
+                $('#name').attr('contenteditable', true);
+                $('#description').attr('contenteditable', true);
                 marker.setDraggable(true);
                 google.maps.event.clearListeners(marker, 'dragstart');
                 marker.addListener('dragstart', function (event) {
@@ -126,6 +132,8 @@
 
               var endEditing = function (event) {
                 console.log('endEditing');
+                $('#name').attr('contenteditable', false);
+                $('#description').attr('contenteditable', false);
                 marker.setDraggable(false);
                 google.maps.event.clearListeners(marker, 'dragstart');
                 google.maps.event.clearListeners(marker, 'dragend');

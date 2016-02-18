@@ -89,6 +89,10 @@
       };
       API.GetNear(options, function (data) {
         // console.log('Got things', data);
+        if (data['rows'] === null) {
+          console.log('Rows is null, theres nothing here');
+          return;
+        }
 
         for (var i = 0; i < data['rows'].length; i++) {
           var thing = data['rows'][i];
@@ -106,8 +110,10 @@
               });
 
               var startEditing = function (event) {
-                marker.setDraggable(true);
                 console.log('Now editing', marker.draggable);
+                $('#name').attr('content-editable', true);
+                $('#description').attr('content-editable', true);
+                marker.setDraggable(true);
                 google.maps.event.clearListeners(marker, 'dragstart');
                 marker.addListener('dragstart', function (event) {
                   console.log('Dragging marker:', marker.getPosition());
@@ -128,13 +134,17 @@
               var saveEditing = function (event) {
                 console.log('saveEditing');
                 endEditing();
+                thing.name = $('#name').text();
+                thing.description = $('#description').text();
+                thing.longitude = marker.getPosition().lng();
+                thing.latitude = marker.getPosition().lat();
                 console.log('About to save thing:', thing);
-                // API.SaveThing(thing['_id'] || thing['id'], thing, function (data) {
-                //   console.log('Success saving thing:', data);
-                // },
-                // function (err) {
-                //   console.log('ERROR while saving edited thing:', err);
-                // });
+                API.SaveThing(thing['_id'] || thing['id'], thing, function (data) {
+                  console.log('Success saving thing:', data);
+                },
+                function (err) {
+                  console.log('ERROR while saving edited thing:', err);
+                });
               };
 
               var interact = function(event) {

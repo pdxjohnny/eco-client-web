@@ -42,6 +42,28 @@
   </div>
 
   <div id="map" data-tap-disabled="true"></div>
+
+  <div id="popup"  class="ui page modal">
+    <i class="close icon"></i>
+    <div  id="name" class="header">
+    </div>
+    <div class="image content">
+      <div class="ui medium image">
+        <img src="assets/images/no-image.png">
+      </div>
+      <div class="description">
+        <div id="name" class="ui header"></div>
+        <p id="description"></p>
+      </div>
+    </div>
+    <div class="actions">
+      <div class="ui positive right labeled icon button">
+        Edit
+        <i class="checkmark icon"></i>
+      </div>
+    </div>
+  </div>
+
   <script>
 
   function initMap() {
@@ -62,11 +84,11 @@
          radius: 10 * 5000
       };
       API.GetNear(options, function (data) {
-        console.log('Got things', data);
+        // console.log('Got things', data);
 
         for (var i = 0; i < data['rows'].length; i++) {
           var thing = data['rows'][i];
-            console.log('Got thing', thing);
+            // console.log('Got thing', thing);
             (function (thing) {
               var position = {};
               position.lng = Number(thing.longitude);
@@ -78,18 +100,17 @@
                 title: thing.name
               });
 
-              var interact = function() {
-                map.setCenter(marker.getPosition());
-                $('.ui.modal').modal('show');
+              var interact = function(event) {
+                console.log(event);
+                map.panTo(marker.getPosition());
+                $('#popup').modal('show');
                 for (var prop in thing) {
                   if (thing.hasOwnProperty(prop)) {
                     $('#'+prop).text(thing[prop]);
                   }
                 }
               };
-              // marker.addListener('click', interact);
-              google.maps.event.addListener(marker, 'click', interact);
-              // marker.addListener('mousedown', interact);
+              marker.addListener('mousedown', interact);
             })(thing);
           }
       },
@@ -106,50 +127,18 @@
 
   </script>
 
-
-  <div class="ui card modal">
-    <div class="image small">
-      <img src="assets/images/no-image.png" />
-    </div>
-    <div class="content">
-      <a id="name" class="header">Name</a>
-      <div class="meta">
-        <!-- <span class="date">Joined in 2013</span> -->
-      </div>
-      <div id="description" class="description">
-        Description
-      </div>
-    </div>
-    <div class="extra content">
-      <!-- <a>
-        <i class="user icon"></i>
-        22 Friends
-      </a>
-      -->
-    </div>
-  </div>
-
 <style type="text/css">
-  body {
-    background-color: #DADADA;
-  }
-  body > .grid {
-    height: 100%;
-  }
-  .image {
-    margin-top: -100px;
-  }
-  .column {
-    max-width: 450px;
-  }
-  html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }
-  #map {
-    height: 100%;
-  }
+html, body {
+  height: 100%;
+}
+body {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+#map {
+  flex: 1 1 auto;
+}
 </style>
 
 <script src="bower_components/jquery/dist/jquery.min.js" charset="utf-8"></script>
@@ -161,7 +150,7 @@
 <script src="js/result.js" charset="utf-8"></script>
 <script src="js/item.js" charset="utf-8"></script>
 <script src="js/form.js" charset="utf-8"></script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAF3-mhc-PArqMLukKDVVX_ch9ZU7D4VhU&signed_in=true&callback=initMap"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAF3-mhc-PArqMLukKDVVX_ch9ZU7D4VhU&callback=initMap"></script>
 
 </body>
 </html>

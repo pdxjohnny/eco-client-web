@@ -57,9 +57,13 @@
       </div>
     </div>
     <div class="actions">
-      <div class="ui positive right labeled icon button">
-        Edit
+      <div id="cancel"  class="ui red deny button">
+        Cancel
+      </div>
+      <div id="action" class="ui positive right labeled icon button">
         <i class="checkmark icon"></i>
+        <p id="actionText">
+        </p>
       </div>
     </div>
   </div>
@@ -97,20 +101,65 @@
               var marker = new google.maps.Marker({
                 position: position,
                 map: map,
-                title: thing.name
+                title: thing.name,
+                draggable: false
               });
 
+              var startEditing = function (event) {
+                marker.setDraggable(true);
+                console.log('Now editing', marker.draggable);
+                google.maps.event.clearListeners(marker, 'dragstart');
+                marker.addListener('dragstart', function (event) {
+                  console.log('Dragging marker:', marker.getPosition());
+
+                });
+                marker.addListener('dragend', function (event) {
+                  console.log('Done dragging marker:', marker.getPosition());
+                });
+              };
+
+              var endEditing = function (event) {
+                console.log('endEditing');
+                marker.setDraggable(false);
+                google.maps.event.clearListeners(marker, 'dragstart');
+                google.maps.event.clearListeners(marker, 'dragend');
+              };
+
+              var saveEditing = function (event) {
+                console.log('saveEditing');
+                endEditing();
+                console.log('About to save thing:', thing);
+                // API.SaveThing(thing['_id'] || thing['id'], thing, function (data) {
+                //   console.log('Success saving thing:', data);
+                // },
+                // function (err) {
+                //   console.log('ERROR while saving edited thing:', err);
+                // });
+              };
+
               var interact = function(event) {
-                console.log(event);
+                console.log('Interaction', marker.draggable);
                 map.panTo(marker.getPosition());
                 $('#popup').modal('show');
+                $('#action').unbind();
+                $('#cancel').unbind();
+                $('#cancel').on('mousedown', endEditing);
+                if (marker.draggable === false) {
+                  $('#actionText').text('Edit');
+                  $('#cancel').hide();
+                  $('#action').on('mousedown', startEditing);
+                } else {
+                  $('#actionText').text('Save Edits');
+                  $('#cancel').show();
+                  $('#action').on('mousedown', saveEditing);
+                }
                 for (var prop in thing) {
                   if (thing.hasOwnProperty(prop)) {
                     $('#'+prop).text(thing[prop]);
                   }
                 }
               };
-              marker.addListener('mousedown', interact);
+              marker.addListener('click', interact);
             })(thing);
           }
       },
